@@ -1,5 +1,6 @@
 # coding: utf-8
 from django.db import models
+from django.core.urlresolvers import reverse_lazy
 
 # Create your models here.
 # models.py : 모델은 데이터를 구성하는 항목 자체(field)와 데이터를 다루는 행위(behavior)를 포함
@@ -29,6 +30,10 @@ class Photo(models.Model):
 		self.filtered_image_file.delete()
 		super(Photo, self).delete(*args, **kwargs)
 		# 삭제할 인자를 알지 못하는 경우에 args, kwargs로 넘겨받은 인자를 삭제
+
+	def get_absolute_url(self):
+		return reverse_lazy('view_single_photo', kwargs={'photo_id': self.id})
+		# 현재 사진의 photo_id를 self.id로 전달하여 URL을 가져옴
 
 
 

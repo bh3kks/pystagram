@@ -1,0 +1,18 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<form
+	method="POST"
+	action="{% url 'new_photo' %}"
+	enctype="multipart/form-data">
+	{% csrf_token %}
+
+	{{form.as_p}}
+	<!-- as.p는 필드와 각 필드의 오류를 찾아 출력--> 
+
+	<p>
+        <input type="submit" />
+	</p>
+</form>
+
+{% endblock %}
