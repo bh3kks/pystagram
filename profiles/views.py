@@ -11,6 +11,12 @@ def profile(request, username):
 	# get_user_model : settings의 이용자 모델을 가져옴
 
 	user = get_object_or_404(User, username=username)
+	photos = user.photo_set.order_by('-created_at', '-pk')
 	# 이용자모델 중 username이 같은 객체를 저장
 
-	return render(request, 'profile.html', {'current_user': user,})
+	return render(request, 'profile.html', 
+		{
+			'current_user': user,
+			'photos': photos,
+		}
+	)

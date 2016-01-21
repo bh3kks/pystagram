@@ -19,7 +19,7 @@ class Photo(models.Model):
 	# 원본 사진 파일 - ImageField 사용
 	# 사진은 해당 위치로 전송, %Y/%m/%d로 년/월/일에 맞는 폴더에 저장
 
-	filtered_image_file = models.ImageField(upload_to='filtered/%Y/%m/%d')
+	filtered_image_file = models.ImageField(null=True, upload_to='filtered/%Y/%m/%d')
 	# 필터 적용된 사진 파일 - ImageField 사용
 
 	description = models.TextField(max_length=300, blank=True)
