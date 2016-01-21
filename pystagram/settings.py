@@ -81,9 +81,22 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.7/howto/static-files/
 
-STATIC_URL = '/static/'
+# 웹 페이지에서 사용할 정적 파일의 최상위 URL 경로
+STATIC_URL = '/assets/'
 
-# 이용자가 업로드한 파일의 경로 지정
-MEDIA_URL = '/'
+# 개발 단계에서 사용하는 정적 파일이 위치한 경로들을 지정
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'static'),
+)
 
-MEDIA_ROOT = os.path.join(BASE_DIR, 'static_files')
+# Django 프로젝트에서 사용하는 모든 정적 파일을 한 곳에 모아넣는 경로
+# collectstatic 수행시 해당 위치로 복사
+STATIC_ROOT = os.path.join(BASE_DIR, 'collected_statics')
+
+
+# MEDIA - 이용자가 업로드한 파일의 경로 지정
+# 웹 페이지에서 사용할 업드라 파일의 최상위 URL 경로
+MEDIA_URL = '/uploaded/'
+
+# 업로드 파일의 최상위 경로
+MEDIA_ROOT = os.path.join(BASE_DIR, 'uploaded_files')

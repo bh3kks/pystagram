@@ -9,11 +9,11 @@ class Photo(models.Model):
 	# 각 field는 field option이 존재
 	# 개별 사진을 구분하는 id - 자동 생성
 
-	image_file = models.ImageField(upload_to='static_files/uploaded/original/%Y/%m/%d')
+	image_file = models.ImageField(upload_to='original/%Y/%m/%d')
 	# 원본 사진 파일 - ImageField 사용
 	# 사진은 해당 위치로 전송, %Y/%m/%d로 년/월/일에 맞는 폴더에 저장
 
-	filtered_image_file = models.ImageField(upload_to='static_files/uploaded/filtered/%Y/%m/%d')
+	filtered_image_file = models.ImageField(upload_to='filtered/%Y/%m/%d')
 	# 필터 적용된 사진 파일 - ImageField 사용
 
 	description = models.TextField(max_length=300, blank=True)
