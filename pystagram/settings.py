@@ -104,3 +104,7 @@ MEDIA_URL = '/uploaded/'
 
 # 업로드 파일의 최상위 경로
 MEDIA_ROOT = os.path.join(BASE_DIR, 'uploaded_files')
+
+
+# 로그인 관련 - 로그인을 하면 사진 업로드 화면으로 이동
+LOGIN_REDIRECT_URL = '/photo/upload/'
