@@ -1,9 +1,11 @@
 # coding: utf-8
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse
+from django.contrib.auth.decorators import login_required
 
 from .models import Photo
 from photo.forms import PhotoEditForm
+from django.conf import settings
 
 # view.py : 특정 url에 접근하면 화면에 표시할 내용 호출 
 
@@ -25,9 +27,14 @@ def single_photo(request, photo_id):
 		)
 	)
 
-
+@login_required
+# login이 필요하다는 문구 출력
 def new_photo(request):
 	
+	# is_authenticated : 로그인 여부를 ture/false로 반환
+	if not request.user.is_authenticated():
+		return redirect(settings.LOGIN_URL)
+
 	# get의 경우 그대로 사용
 	if request.method == "GET":
 		edit_form = PhotoEditForm()
@@ -38,7 +45,11 @@ def new_photo(request):
 
 		# is_valid : 폼에 전달된 모든 데이터가 유효하면 True
 		if edit_form.is_valid():
-			new_photo = edit_form.save()
+			new_photo = edit_form.save(commit=False)
+			# commit=False : 인스턴스 객체만 반영하고 DB에 실제로 반영하지 않음
+			new_photo.user = request.user
+			# 해당 객체에 user할당 (request에는 기본적으로 user도 같이 넘어옴)
+			new_photo.save()
 			# PhotoEditForm을 저장하지만 Photo를 기반으로 하므로 Photo 객체가 저장
 
 			return redirect(new_photo.get_absolute_url())

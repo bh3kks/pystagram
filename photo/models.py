@@ -1,6 +1,7 @@
 # coding: utf-8
 from django.db import models
 from django.core.urlresolvers import reverse_lazy
+from django.conf import settings
 
 # Create your models here.
 # models.py : 모델은 데이터를 구성하는 항목 자체(field)와 데이터를 다루는 행위(behavior)를 포함
@@ -9,6 +10,9 @@ class Photo(models.Model):
 	# Model의 속성은 field로 나타냄 -> Django가 제공하는 자료형
 	# 각 field는 field option이 존재
 	# 개별 사진을 구분하는 id - 자동 생성
+
+	user = models.ForeignKey(settings.AUTH_USER_MODEL)
+	# settings에 존재하는 이용자 모델이위치한 경로 문자열
 
 	image_file = models.ImageField(upload_to='original/%Y/%m/%d')
 	# 원본 사진 파일 - ImageField 사용
