@@ -24,6 +24,8 @@ urlpatterns = [
     url(r'^accounts/logout/', 'django.contrib.auth.views.logout', name='logout'),
     # logout 화면 url - 장고에 내장된 logout 함수 사용
 
+    url(r'^signin/$', 'photo.views.signin', name='singin'),
+
     url(r'^admin/', include(admin.site.urls)),
     # admin url
 

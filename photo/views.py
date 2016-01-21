@@ -3,6 +3,8 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 
+from django.contrib.auth.forms import UserCreationForm
+
 from .models import Photo
 from photo.forms import PhotoEditForm
 from django.conf import settings
@@ -58,3 +60,20 @@ def new_photo(request):
 	return render(request,  'new_photo.html', {'form': edit_form,})
 	# PhotoEditForm이 담긴 edit_form 객체를 전달
 
+def signin(request):
+
+
+	if request.method == "GET":
+		userform = UserCreationForm()
+
+	elif request.method == "POST":
+		userform = UserCreationForm(request.POST)
+
+		if userform.is_valid():
+			userform.save()
+
+			return HttpResponse('회원 가입 완료')
+
+
+
+	return render(request, "signin.html", {"userform": userform,})

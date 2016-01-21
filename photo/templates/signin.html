@@ -1,0 +1,16 @@
+{% extends 'layout.html' %}
+{% block content %}
+
+<!-- Sign Up Form -->
+<form 
+    method="post" action="/signin/" enctype="multipart/form-data">
+    {% csrf_token %}
+
+    {{ userform.as_p }}
+
+    <p>
+    	<input type="submit" />
+	</p>        
+</form>
+
+{% endblock %}
