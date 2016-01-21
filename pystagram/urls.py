@@ -4,7 +4,9 @@ from django.contrib import admin
 from django.conf import settings
 from django.conf.urls.static import static
 
-urlpatterns = patterns('',
+from profiles.urls import urlpatterns as profile_urls
+
+urlpatterns = [
 
 	url(r'^photo/(?P<photo_id>\d+)/$', 'photo.views.single_photo', name='view_single_photo'),
 	# 하나의 사진 출력 url
@@ -24,7 +26,10 @@ urlpatterns = patterns('',
 
     url(r'^admin/', include(admin.site.urls)),
     # admin url
-)
+
+    url(r'^user/', include(profile_urls, namespace='profiles'),),
+    # user로 시작하는 url의 경우 profile_urls객체를 매핑, 이름공간을 profiles로 지정
+]
 
 # media url 설정
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

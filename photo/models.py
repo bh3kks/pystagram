@@ -13,6 +13,7 @@ class Photo(models.Model):
 
 	user = models.ForeignKey(settings.AUTH_USER_MODEL)
 	# settings에 존재하는 이용자 모델이위치한 경로 문자열
+	# 하나의 uesr에 여러개의 Photo가 연결되는 One-to-Many 관계
 
 	image_file = models.ImageField(upload_to='original/%Y/%m/%d')
 	# 원본 사진 파일 - ImageField 사용
