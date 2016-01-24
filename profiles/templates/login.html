@@ -1,0 +1,15 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<h2> LOGIN PAGE </h2>
+
+<form method="post" action="/login/check/">
+{% csrf_token %}
+<p><label for="email">ID </label><input type="text" id="email" name="email" value="" /></p>
+<p><label for="password">제목 </label><input type="password" id="password" name="password" value="" /></p>
+
+<input type="submit" value="로그인" />
+</form>
+
+{% endblock %}
