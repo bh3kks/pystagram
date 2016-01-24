@@ -23,12 +23,11 @@ urlpatterns = [
     url(r'^accounts/logout/', 'django.contrib.auth.views.logout', name='logout'),
     # logout 화면 url - 장고에 내장된 logout 함수 사용
 
-
 	url(r'^photo/(?P<photo_id>\d+)/$', 'photo.views.single_photo', name='view_single_photo'),
 	# 하나의 사진 출력 url
 	# url(regex(정규표현식) , view(화면 표시할 함수), name)
 
-	url(r'^photo/upload/$', 'photo.views.new_photo', name='new_photo'),
+	url(r'^photo/upload/(?P<user_id>\d+)/$', 'photo.views.new_photo', name='new_photo'),
 	# 사진 업로드 url
 
     url(r'^admin/', include(admin.site.urls)),

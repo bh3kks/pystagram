@@ -5,7 +5,7 @@ from django.shortcuts import render, get_object_or_404
 from django.contrib.auth import get_user_model
 
 from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth import authenticate
+from django.contrib.auth import authenticate, login
 from django.http import HttpResponseRedirect, HttpResponse
 
 def main_view(request):
@@ -24,7 +24,7 @@ def signin(request):
 		if userform.is_valid():
 			userform.save()
 
-			return HttpResponse('회원 가입 완료')
+			return HttpResponse('COMPLETE SIGN IN')
 
 	return render(request, "signin.html", {"userform": userform,})
 
@@ -54,6 +54,7 @@ def login_check(request):
 	user = authenticate(username=cur_email, password=cur_password)
 	if user is not None:
 		if user.is_active:
+			login(request, user)
 			return HttpResponseRedirect('/user/%s/' %cur_email)
 		else:
 			return HttpResponse('ACCOUNT DISABLED')
@@ -61,7 +62,7 @@ def login_check(request):
 		return HttpResponse('INCORRECT PASSWORD.')
 
 
-def profile(request, username):
+def timeline(request, username):
 
 	User = get_user_model()
 	# get_user_model : settings의 이용자 모델을 가져옴
@@ -70,9 +71,16 @@ def profile(request, username):
 	photos = user.photo_set.order_by('-created_at', '-pk')
 	# 이용자모델 중 username이 같은 객체를 저장
 
-	return render(request, 'profile.html', 
+	return render(request, 'timeline.html', 
 		{
 			'current_user': user,
 			'photos': photos,
 		}
 	)
+
+def profile(request, username):
+
+	User = get_user_model()
+	user = get_object_or_404(User, username=username)
+
+	return HttpResponse('%s Profile' % user)

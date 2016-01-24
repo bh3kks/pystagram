@@ -1,0 +1,9 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+
+<h3>{{ photo.user }}'s Photo Num. {{ photo.id }}</h3>
+<h3>description : {{ photo.description }}</h3>
+<img src="{{ photo.image_file.url }}" width=700>
+
+{% endblock %}

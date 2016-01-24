@@ -1,0 +1,20 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<h2>{{ current_user }}'s Timeline<h2>
+
+
+<h3><a href="/photo/upload/{{ current_user.id }}/">ADD PICTURE</a></h3>
+<h3><a href="/user/{{ current_user }}/profile/">VIEW PROFILE</a></h3>
+
+{% for photo in photos %}
+	<a href="/photo/{{ photo.id }}/">
+		<img src="{{ photo.image_file.url }}" width="350">
+	</a>
+{% empty %}
+    <li>No Pictures.</li>
+{% endfor %}
+
+{% endblock %}
+
+
