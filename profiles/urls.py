@@ -8,6 +8,7 @@ urlpatterns = [
 
     url(r'^(?P<username>[\w.@+-]+)/profile/$', views.profile, name='profile'),
     # 해당 유저의 프로필 출력
-    # User 모델을 새롭게 정의하여
-    # 프로필 사진, 개인 설명, 팔로워 등의 정보 만들 것
+
+    url(r'^(?P<username>[\w.@+-]+)/profile/edit/$', views.profile_edit, name='profile_edit'),
+   	# 프로필을 수정하는 화면
 ]
