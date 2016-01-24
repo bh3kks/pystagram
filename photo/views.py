@@ -31,6 +31,9 @@ def new_photo(request, user_id):
 	if not request.user.is_authenticated():
 		return redirect(settings.LOGIN_URL)
 
+	user = get_object_or_404(User, pk=user_id)
+	if request.user != user:
+		return HttpResponse('Not Your Timeline')
 	# get의 경우 그대로 사용
 	if request.method == "GET":
 		edit_form = PhotoEditForm()
@@ -44,7 +47,6 @@ def new_photo(request, user_id):
 			new_photo = edit_form.save(commit=False)
 			# commit=False : 인스턴스 객체만 반영하고 DB에 실제로 반영하지 않음
 
-			user = get_object_or_404(User, pk=user_id)
 			new_photo.user = user
 			# 해당 객체에 user할당 (request에는 기본적으로 user도 같이 넘어옴)
 			new_photo.save()
@@ -53,7 +55,7 @@ def new_photo(request, user_id):
 			return redirect('/user/%s/' % user)
 			# redirect는 해당 url로 이동
 
-	user = get_object_or_404(User, pk=user_id)
+	
 	return render(request,  'new_photo.html', 
 		{
 			'form': edit_form,
