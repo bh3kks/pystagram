@@ -1,10 +1,12 @@
 # coding: utf-8
 
 from __future__ import unicode_literals
+from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth import get_user_model
 from .models import UserProfile
 from profiles.profile_forms import ProfileEditForm
+from django.contrib.auth.decorators import login_required
 
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import authenticate, login
@@ -93,12 +95,18 @@ def profile(request, username):
 		}
 	)
 
-
+@login_required
 def profile_edit(request, username):
+
+	if not request.user.is_authenticated():
+		return redirect(settings.LOGIN_URL)
 
 	User = get_user_model()
 	user = get_object_or_404(User, username=username)
 	user_profile = get_object_or_404(UserProfile, user=user) 
+
+	if request.user != user:
+		return HttpResponse('Not Your Profile')
 
 	if request.method == "GET":
 		edit_form = ProfileEditForm()
