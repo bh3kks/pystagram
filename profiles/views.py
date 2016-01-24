@@ -86,7 +86,11 @@ def profile(request, username):
 
 	User = get_user_model()
 	user = get_object_or_404(User, username=username)
-	user_profile = get_object_or_404(UserProfile, user=user) 
+
+	try:
+		user_profile = get_object_or_404(UserProfile, user=user) 
+	except:
+		return redirect('/user/%s/profile/edit/' % user)
 
 	return render(request, 'profile.html', 
 		{
@@ -103,7 +107,13 @@ def profile_edit(request, username):
 
 	User = get_user_model()
 	user = get_object_or_404(User, username=username)
-	user_profile = get_object_or_404(UserProfile, user=user) 
+
+	first_edit = ''
+
+	try:
+		user_profile = get_object_or_404(UserProfile, user=user)
+	except:
+		first_edit = 'You Should Upload Your Profile!'
 
 	if request.user != user:
 		return HttpResponse('Not Your Profile')
@@ -124,7 +134,8 @@ def profile_edit(request, username):
 			# 해당 객체에 user할당 (request에는 기본적으로 user도 같이 넘어옴)
 			new_profile.save()
 			# PhotoEditForm을 저장하지만 Photo를 기반으로 하므로 Photo 객체가 저장
-			user_profile.delete()
+			if first_edit=='':
+				user_profile.delete()
 
 			return redirect('/user/%s/profile/' % user)
 			# redirect는 해당 url로 이동
@@ -133,6 +144,6 @@ def profile_edit(request, username):
 		{
 			'form': edit_form,
 			'current_user': user,
-			'current_user_profile': user_profile,
+			'first_edit':first_edit,
 		}
 	)
