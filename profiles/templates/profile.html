@@ -1,0 +1,10 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<h2>{{ current_user }}'s Profile<h2>
+
+<img src="{{ current_user_profile.profile_image.url }}" width="600">
+<h3>{{ current_user_profile.description }}</h3>
+<a href="/user/bh4kks/profile/edit/"> Edit Profile </a>
+
+{% endblock %}

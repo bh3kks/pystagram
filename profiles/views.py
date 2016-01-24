@@ -1,8 +1,10 @@
 # coding: utf-8
 
 from __future__ import unicode_literals
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth import get_user_model
+from .models import UserProfile
+from profiles.profile_forms import ProfileEditForm
 
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import authenticate, login
@@ -82,5 +84,47 @@ def profile(request, username):
 
 	User = get_user_model()
 	user = get_object_or_404(User, username=username)
+	user_profile = get_object_or_404(UserProfile, user=user) 
 
-	return HttpResponse('%s Profile' % user)
+	return render(request, 'profile.html', 
+		{
+			'current_user': user,
+			'current_user_profile': user_profile,
+		}
+	)
+
+
+def profile_edit(request, username):
+
+	User = get_user_model()
+	user = get_object_or_404(User, username=username)
+	user_profile = get_object_or_404(UserProfile, user=user) 
+
+	if request.method == "GET":
+		edit_form = ProfileEditForm()
+
+	# post의 경우 post로 전달한 객체가 request.POST에, 파일은 request.FILES에 담겨있다
+	elif request.method == "POST":
+		edit_form = ProfileEditForm(request.POST, request.FILES)
+
+		# is_valid : 폼에 전달된 모든 데이터가 유효하면 True
+		if edit_form.is_valid():
+			new_profile = edit_form.save(commit=False)
+			# commit=False : 인스턴스 객체만 반영하고 DB에 실제로 반영하지 않음
+
+			new_profile.user = user
+			# 해당 객체에 user할당 (request에는 기본적으로 user도 같이 넘어옴)
+			new_profile.save()
+			# PhotoEditForm을 저장하지만 Photo를 기반으로 하므로 Photo 객체가 저장
+			user_profile.delete()
+
+			return redirect('/user/%s/profile/' % user)
+			# redirect는 해당 url로 이동
+
+	return render(request, 'profile_edit.html', 
+		{
+			'form': edit_form,
+			'current_user': user,
+			'current_user_profile': user_profile,
+		}
+	)
