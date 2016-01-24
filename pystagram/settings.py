@@ -86,7 +86,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.7/howto/static-files/
 
 # 웹 페이지에서 사용할 정적 파일의 최상위 URL 경로
-STATIC_URL = '/assets/'
+STATIC_URL = '/static/'
 
 # 개발 단계에서 사용하는 정적 파일이 위치한 경로들을 지정
 STATICFILES_DIRS = (
@@ -107,4 +107,4 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'uploaded_files')
 
 
 # 로그인 관련 - 로그인을 하면 사진 업로드 화면으로 이동
-LOGIN_REDIRECT_URL = '/photo/upload/'
+#LOGIN_REDIRECT_URL = '/photo/upload/'
