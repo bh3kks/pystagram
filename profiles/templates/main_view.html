@@ -1,11 +1,55 @@
-{% extends 'layout.html' %}
-{% block content %}
-
+<!DOCTYPE html>
 {% load staticfiles %}
+<html xmlns="http://www.w3.org/1999/xhtml">
+<html lang="ko">
 
-<img src="{% static "img/pystagram_1.png" %}">
+<head>
+    <title>Pystagram</title>
+    <meta charset="utf-8">
+</head>
 
-<h2><a href="/login/">Log in</a>
-<a href="/signin/">Sign in</a></h2>
+<body>
+	<script type="text/javascript">
+		function button1()
+		{
+			alert("asdf");
+		}
+	</script>
 
-{% endblock %}
+	<div id="container" orientation="par"style="margin-left:250px;margin-top:50px;height:600px;width:800px;">
+		<div id="img" style="height:600px;width:400px;float:left;">
+			<img src="{% static "img/main_img.png" %}">
+		</div>
+		<div id="login" style="margin-top:100px;height:600px;width:400px;float:left;">
+			<img src="{% static "img/pysta.png" %}">
+			<form method="post" action="/login/check/">
+				{% csrf_token %}
+				<p>
+					<FONT size="4" face="consolas" color="#111111">ID&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</FONT>
+					<input type="text" id="email" name="email" size="20" 
+						maxlength="25" value="" />
+				</p>
+				<p>
+					<FONT size="4" face="consolas" color="#111111">Password&nbsp</FONT>
+					<input type="password" id="password" name="password" size="21" maxlength="25" value="" />
+				</p>
+				<input type="image" src="{% static "img/login_img.png" %}"/>
+				<br><a href="/signin/" title="회원가입">
+					<FONT size="2" face="consolas" color="#555555">회원이 아니신가요?</FONT></a>
+				<br>
+					<FONT size="2" face="consolas" color="#555555">비밀번호를 잊으셨나요?</FONT>
+
+			</form>
+		</div>
+	</div>
+
+	
+	<input type="image" src="{% static "img/login_img.png" %}" onclick="button1()">
+	<h2><a href="/login/">Log in</a>
+	<a href="/signin/">Sign in</a></h2>
+
+</body>
+
+</html>
+
+
