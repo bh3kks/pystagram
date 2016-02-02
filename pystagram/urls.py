@@ -14,9 +14,6 @@ urlpatterns = [
 	url(r'^signin/$', 'profiles.views.signin', name='singin'),
 	# 회원가입 화면 rul
 
-	url(r'^login/$', 'profiles.views.login_view', name='login'),
-	# login 화면 url 
-
 	url(r'^login/check/$', 'profiles.views.login_check', name='login_check'),
 	# login 체크 화면 url
 
