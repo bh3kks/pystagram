@@ -1,16 +1,42 @@
-{% extends 'layout.html' %}
-{% block content %}
+<!DOCTYPE html>
+{% load staticfiles %}
+<html xmlns="http://www.w3.org/1999/xhtml">
+<html lang="ko">
 
-<!-- Sign Up Form -->
-<form 
-    method="post" action="/signin/" enctype="multipart/form-data">
-    {% csrf_token %}
+<head>
+    <title>Pystagram</title>
+    <meta charset="utf-8">
+</head>
 
-    {{ userform.as_p }}
+<body>
 
-    <p>
-    	<input type="submit" />
-	</p>        
-</form>
+	<div id="container" orientation="par"style="margin-left:250px;margin-top:50px;height:600px;width:800px;">
+		<div id="img" style="height:600px;width:400px;float:left;">
+			<img src="{% static "img/main_img.png" %}">
+		</div>
+		<div id="login" style="margin-top:100px;height:600px;width:400px;float:left;">
+			<img src="{% static "img/signin_img.png" %}">
+			<form
+				method="post" action="/signin/" enctype="multipart/form-data">
+				{% csrf_token %}
+				<p>
+					<FONT size="4" face="consolas" color="#111111">User ID&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</FONT>
+					<input type="text" id="username" name="username" size="20" 
+						maxlength="25" value="" />
+				</p>
+				<p>
+					<FONT size="4" face="consolas" color="#111111">User Password&nbsp&nbsp&nbsp&nbsp</FONT>
+					<input type="password" id="password1" name="password1" size="21" maxlength="25" value="" />
+				</p>
+				<p>
+					<FONT size="4" face="consolas" color="#111111">Confirm Password&nbsp</FONT>
+					<input type="password" id="password2" name="password2" size="21" maxlength="25" value="" />
+				</p>
+				<input type="image" src="{% static "img/signin_confirm.png" %}"/>
+		</div>
+	</div>
 
-{% endblock %}
+</body>
+
+</html>
+

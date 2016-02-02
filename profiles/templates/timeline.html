@@ -1,20 +1,56 @@
-{% extends 'layout.html' %}
 
-{% block content %}
-<h2>{{ current_user }}'s Timeline<h2>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<html lang="ko">
+{% load staticfiles %}
+<head>
+    <title>{{ current_user }}'s Pystagram</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="{% static "css/style01.css/" %}"/>
+    <script type="text/javascript" src="{% static "js/jquery-2.2.0.min.js" %}"></script>
+</head>
+
+<body>
+
+<div style="margin-top:15px;margin-left:200px;height:60px;">
+	<div style="height:50px;width:800px;float:left;">
+		<img src="{% static "img/pysta.png" %}" height="40px">
+	</div>
+	<div style="height:25px;">
+		<img src="{% static "img/logout_img.png" %}" height="25px">
+	</div>
+</div>
+
+<div style="margin-top:50px;margin-left:300px;height:230px;">
+	<div class="image-cropper" style="float:left;">
+		<img src="{{ current_user_profile.profile_image.url }}">
+	</div>
+	<div style="margin-left:250px;width:800px;height:100px;">
+		<FONT size="7" face="consolas" color="#333333">{{ current_user }}</FONT></br>
+		<FONT size="4" face="consolas" 
+			color="#555555">{{ current_user_profile.description }}</FONT></br></br>
+		<FONT size="4" face="consolas" 
+			color="#555555">게시물 <b>{{ num_of_photos }}</b>개&nbsp&nbsp팔로워 <b>0</b>명&nbsp&nbsp 팔로우 <b>0</b>명</FONT></br></br>
+		
+		<a href="/photo/upload/{{ current_user.id }}/">ADD PICTURE</a><br>
+		<a href="/user/{{ current_user }}/profile/">VIEW PROFILE</a>
+	</div>
+</div>
+	<div style="margin-left:200px;width:950px; float:left;">
+	{% for photo in photos %}
+		<a href="/photo/{{ photo.id }}/">
+			<div class="thumbnail" style="float:left;margin-left:5px;margin-bottom:5px;">
+				<img src={{ photo.image_file.url }} alt="Image"/>
+			</div>
+		</a>
+	{% empty %}
+	    <li>No Pictures.</li>
+	{% endfor %}
+	</div>
 
 
-<h3><a href="/photo/upload/{{ current_user.id }}/">ADD PICTURE</a></h3>
-<h3><a href="/user/{{ current_user }}/profile/">VIEW PROFILE</a></h3>
+</body>
 
-{% for photo in photos %}
-	<a href="/photo/{{ photo.id }}/">
-		<img src="{{ photo.image_file.url }}" width="350">
-	</a>
-{% empty %}
-    <li>No Pictures.</li>
-{% endfor %}
-
-{% endblock %}
+</html>
 
 
