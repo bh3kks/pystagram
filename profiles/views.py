@@ -30,6 +30,9 @@ def signin(request):
 
 			return HttpResponse('COMPLETE SIGN IN')
 
+		else:
+			return HttpResponse('Existing ID or Password Error!')
+
 	return render(request, "signin.html", {"userform": userform,})
 
 
@@ -73,12 +76,19 @@ def timeline(request, username):
 
 	user = get_object_or_404(User, username=username)
 	photos = user.photo_set.order_by('-created_at', '-pk')
+	num_of_photos = photos.count()
 	# 이용자모델 중 username이 같은 객체를 저장
+	try:
+		user_profile = get_object_or_404(UserProfile, user=user) 
+	except:
+		user_profile = 0
 
 	return render(request, 'timeline.html', 
 		{
 			'current_user': user,
 			'photos': photos,
+			'current_user_profile': user_profile,
+			'num_of_photos':num_of_photos,
 		}
 	)
 
